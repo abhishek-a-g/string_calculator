@@ -12,24 +12,20 @@ const StringCalculator = () => {
   const handleChange = (e) => {
     const { value } = e.target;
     setInput(value);
-    setResult(prev => (
-      {
-        ...prev,
-        output: null
-      }
-    ));
+    setResult((prev) => ({
+      ...prev,
+      output: null,
+    }));
   };
 
   const handleCalculate = (e) => {
     try {
       setResult(add(input));
     } catch (e) {
-      setResult(prev => (
-        {
-          ...prev,
-          output: null
-        }
-      ));
+      setResult((prev) => ({
+        ...prev,
+        output: null,
+      }));
     }
   };
 
@@ -53,12 +49,12 @@ const StringCalculator = () => {
       {result.output !== null && (
         <p
           className={`${
-            result?.outputType === "success"
-              ? "text-green-500"
-              : "text-red-500"
+            result?.outputType === "success" ? "text-green-500" : "text-red-500"
           }`}
         >
-          Result: {result.output}
+          {result?.outputType === "success"
+            ? `Result: ${result.output}`
+            : result.output}
         </p>
       )}
       {/* <button
