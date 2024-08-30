@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest';
 import * as addJs from '../utils/add.js'
 
 
@@ -260,16 +261,21 @@ export const test_data = [
     }
 ]
 
-export const test_add = () => {
-    test_data.forEach((e, i) => {
-        let result = addJs.add(e.input)
-        result === e.output
-            ? console.log(`Test Case ${i + 1} Passed`)
-            : console.log(`Test Case ${i + 1} Failed - ${JSON.stringify({
-                ...e,
-                "result": result,
-            }, null, 2)}`);
-    });
-};
+// export const test_add = () => {
+//     test_data.forEach((e, i) => {
+//         let result = addJs.add(e.input)
+//         result === e.output
+//             ? console.log(`Test Case ${i + 1} Passed`)
+//             : console.log(`Test Case ${i + 1} Failed - ${JSON.stringify({
+//                 ...e,
+//                 "result": result,
+//             }, null, 2)}`);
+//     });
+// };
 
-// test_add()
+test_data.forEach((e, i) => {
+    test(`Test Case ${i + 1}`, () => {
+        const result = addJs.add(e.input).output;
+        expect(result).toEqual(e.output);
+    });
+});

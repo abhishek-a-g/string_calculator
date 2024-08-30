@@ -1,22 +1,35 @@
 import React, { useState } from "react";
-import { test_add } from "../test/test_add";
+// import { test_add } from "../test/test_add.test";
 import { add } from "../utils/add";
 
 const StringCalculator = () => {
   const [input, setInput] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState({
+    outputType: "success",
+    output: null,
+  });
 
   const handleChange = (e) => {
     const { value } = e.target;
     setInput(value);
-    setResult(null);
+    setResult(prev => (
+      {
+        ...prev,
+        output: null
+      }
+    ));
   };
 
   const handleCalculate = (e) => {
     try {
       setResult(add(input));
     } catch (e) {
-      setResult(null);
+      setResult(prev => (
+        {
+          ...prev,
+          output: null
+        }
+      ));
     }
   };
 
@@ -25,7 +38,7 @@ const StringCalculator = () => {
       <h1 className="text-2xl mb-4">String Calculator</h1>
       <textarea
         type="text"
-        className="p-2 mb-4 w-80 rounded shadow focus:outline-none focus:ring-0"
+        className="p-2 mb-4 min-h-[calc(25vh)] w-80 rounded shadow focus:outline-none focus:ring-0 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-200"
         value={input}
         onChange={handleChange}
         placeholder="Enter comma separated numbers"
@@ -33,12 +46,21 @@ const StringCalculator = () => {
       <button
         type="button"
         onClick={handleCalculate}
-        className={`bg-blue-500 text-white py-2 px-4 rounded mb-4 hover:bg-blue-700 
-          `}
+        className="bg-blue-500 text-white py-2 px-4 rounded mb-4 hover:bg-blue-700"
       >
-        Calculate
+        Calculate Sum
       </button>
-      {result !== null && <p className="text-green-500">Result: {result}</p>}
+      {result.output !== null && (
+        <p
+          className={`${
+            result?.outputType === "success"
+              ? "text-green-500"
+              : "text-red-500"
+          }`}
+        >
+          Result: {result.output}
+        </p>
+      )}
       {/* <button
         type="button"
         onClick={() => test_add()}

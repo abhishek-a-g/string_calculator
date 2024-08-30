@@ -2,7 +2,10 @@ export const add = (numbersString) => {
     // Initialize the variables
     let delimiter = ",";
     let input = numbersString.trim();
-    let result = 0;
+    let result = {
+        outputType: "success",
+        output: 0
+    }
 
     // Check if the user has provided a custom delimiter
     if (input.startsWith("//")) {
@@ -32,7 +35,10 @@ export const add = (numbersString) => {
             // Check if it is not a number
             if (!regexNumCheck.test(numStr)) {
                 // Not a number
-                return `Invalid input! ${numStr}`;
+                return {
+                    outputType: "error",
+                    output: `Invalid input! ${numStr}`
+                }
             } else {
                 // it is a number
                 // Check if it is an integer
@@ -40,15 +46,21 @@ export const add = (numbersString) => {
                     let number = parseInt(numStr, 10);
                     // Check if it is truly a positive integer
                     if (number >= 0) {
-                        result += number;
+                        result.output += number;
                     } else {
                         // Found negative integers
                         let negatives = numbers.slice(i).reduce((ac, e) => new RegExp(/^-\d+$/).test(e) ? ac + "," + e : ac);
                         // console.log("negatives", negatives);
-                        return `negative numbers not allowed ${negatives}`;
+                        return {
+                            outputType: "error",
+                            output: `negative numbers not allowed ${negatives}`
+                        };
                     }
                 } else {
-                    return `Decimal numbers not allowed! ${numStr}`;
+                    return {
+                        outputType: "error",
+                        output: `Decimal numbers not allowed! ${numStr}`
+                    };
                 }
             }
         }
