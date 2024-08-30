@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
+import StringCalculator from "./components/StringCalculator";
 
 function App() {
-
   return (
     <>
-    <div>swerw</div>
+      <StringCalculator />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
