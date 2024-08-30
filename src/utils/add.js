@@ -1,15 +1,16 @@
 export const add = (numbersString) => {
     // Initialize the variables
     let delimiter = ",";
-    let input = numbersString;
+    let input = numbersString.trim();
     let result = 0;
 
     // Check if the user has provided a custom delimiter
-    if (numbersString.startsWith("//")) {
+    if (input.startsWith("//")) {
         // Extract the delimiter
-        let tmp = numbersString.split("\n");
+        let tmp = input.split("\n");
+        // console.log(tmp)
         delimiter = tmp[0].slice(2);
-        input = tmp[1];
+        input = tmp.slice(1).join("\n");
     }
 
     // check if the string is nothing but a bunch of delimiters
@@ -18,31 +19,37 @@ export const add = (numbersString) => {
     }
 
     // Start splitting
-    let regex = new RegExp(`\\s*${delimiter}\\s*|\\s*\\n+\\s*`, "g");
-    let numbers = input.split(regex);
+    let regexSplit = new RegExp(`\\s*${delimiter}\\s*|\\s*\\n+\\s*`, "g");
+    let numbers = input.split(regexSplit);
     // console.log(numbers);
 
     for (let i = 0; i < numbers.length; i++) {
-        let e = numbers[i];
-        let number = parseInt(e);
+        let numStr = numbers[i];
+        if (numStr !== "") {
 
-        // Check if it is a number
-        if (isNaN(number)) {
-            return "NaN";
-        } else {
-            // Check if it is an integer
-            if (Number.isInteger(number)) {
-                // Check if it is truly a positive integer
-                if (number >= 0) {
-                    result += number;
-                } else {
-                    // Found negative integers
-                    let negatives = numbers.slice(i).reduce((ac, e) => new RegExp(/^-\d+$/).test(e) ? ac + "," + e : ac);
-                    // console.log("negatives", negatives);
-                    return `negative numbers not allowed ${negatives}`;
-                }
+            const regexNumCheck = new RegExp("^-?\\d+(\\.\\d+)?$");
+
+            // Check if it is not a number
+            if (!regexNumCheck.test(numStr)) {
+                // Not a number
+                return `Invalid input! ${numStr}`;
             } else {
-                return "Found numbers other than integers!";
+                // it is a number
+                // Check if it is an integer
+                if (!numStr.includes(".")) {
+                    let number = parseInt(numStr, 10);
+                    // Check if it is truly a positive integer
+                    if (number >= 0) {
+                        result += number;
+                    } else {
+                        // Found negative integers
+                        let negatives = numbers.slice(i).reduce((ac, e) => new RegExp(/^-\d+$/).test(e) ? ac + "," + e : ac);
+                        // console.log("negatives", negatives);
+                        return `negative numbers not allowed ${negatives}`;
+                    }
+                } else {
+                    return `Decimal numbers not allowed! ${numStr}`;
+                }
             }
         }
     }
