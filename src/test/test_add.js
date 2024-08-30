@@ -108,7 +108,7 @@ export const test_data = [
     },
     {
         input: "1,5,8,5,7,534,45,34,576,576",
-        output: 1786
+        output: 1791
     },
     {
         input: "\n",
@@ -172,7 +172,7 @@ export const test_data = [
     },
     {
         input: ",//;\n1;2",
-        output: "Invalid input! ,//;"
+        output: "Invalid input! //;"
     },
     {
         input: ";//;\n1;2",
@@ -200,7 +200,7 @@ export const test_data = [
     },
     {
         input: " //; \n1;2",
-        output: 3
+        output: "Invalid input! 1;2"
     },
     {
         input: " //; \n1; 2",
@@ -232,11 +232,11 @@ export const test_data = [
     },
     {
         input: "1,2,-2",
-        output: "negative numbers not allowed: -2"
+        output: "negative numbers not allowed -2"
     },
     {
         input: "1,2,--2",
-        output: "Invalid input! --2;"
+        output: "Invalid input! --2"
     },
     {
         input: "1,2;-2",
@@ -252,11 +252,11 @@ export const test_data = [
     },
     {
         input: "1,2,-2,a",
-        output: "negative numbers not allowed: -2"
+        output: "negative numbers not allowed -2"
     },
     {
         input: "1,2,-2,-3",
-        output: "negative numbers not allowed: -2,-3"
+        output: "negative numbers not allowed -2,-3"
     }
 ]
 
